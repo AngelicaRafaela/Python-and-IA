@@ -1,30 +1,55 @@
 import textwrap
 from abc import ABC, abstractclassmethod, abstractproperty
 from datetime import datetime, timedelta
+from pathlib import Path
+import csv
+import os
 
-def log_transacao(funcao):
-    # Decorador para registrar as transações
+ROOT_PATH = Path(__file__).parent
+
+def log_transacao_arquivo(funcao):
+    # Decorador para registrar as transações em um arquivo CSV
     def envelope(*args, **kwargs):
-        resultado = funcao(*args, **kwargs)
-        print(f"{datetime.now().strftime('%d-%m-%Y %H:%M')}: {funcao.__name__.upper()}")
-        return resultado
+        # Obter o caminho completo do arquivo de log
+        log_path = ROOT_PATH / "log.csv"
+        
+        # Verificar se o arquivo de log já existe
+        log_exist = os.path.exists(log_path)
+        
+        # Abrir o arquivo CSV no modo de escrita, com 'newline' vazio para evitar linhas em branco
+        with open(log_path, mode='a', newline='') as file:
+            # Criar o escritor CSV
+            writer = csv.writer(file)
+            
+            # Escrever o cabeçalho do CSV, se o arquivo acabou de ser criado
+            if not log_exist:
+                writer.writerow(['Data e Hora', 'Função', 'Argumentos', 'Valor Retornado'])
+
+            # Obter a data e hora atuais
+            data_hora = datetime.now().strftime('%d-%m-%Y %H:%M')
+
+            # Escrever os dados da transação no arquivo CSV
+            writer.writerow([data_hora, funcao.__name__, args, kwargs])
+
+        # Chamar a função original e retornar o resultado
+        return funcao(*args, **kwargs)
     return envelope
+
 
 class Cliente:
     def __init__(self, endereco):
         self.endereco = endereco
         self.contas = []
 
-    @log_transacao
+    @log_transacao_arquivo
     def realizar_transacao(self, conta, transacao):
         # Método para realizar uma transação em uma conta associada ao cliente
         transacao.registrar(conta)
 
-    @log_transacao
+    @log_transacao_arquivo
     def adicionar_conta(self, conta):
         # Método para adicionar uma nova conta à lista de contas do cliente
         self.contas.append(conta)
-
 
 class PessoaFisica(Cliente):
     def __init__(self, nome, data_nascimento, cpf, endereco):
@@ -34,7 +59,7 @@ class PessoaFisica(Cliente):
         self.data_nascimento = data_nascimento
         self.cpf = cpf
     def __repr__(self) -> str:
-        return f"<{self.__class__.__na}: ({self.cpf})>"
+        return f"<{self.__class__.__name__}: ({self.cpf})>"
 
 class Conta:
     MAX_TRANSACTIONS_PER_DAY = 2  # Limite de transações diárias
@@ -79,7 +104,7 @@ class Conta:
         transacoes_hoje = [transacao for transacao in self._transacoes_do_dia if transacao.date() == hoje]
         return len(transacoes_hoje) >= self.MAX_TRANSACTIONS_PER_DAY
 
-    @log_transacao
+    @log_transacao_arquivo
     def sacar(self, valor):
         # Método para realizar um saque na conta
         if self._verificar_limite_transacoes():
@@ -99,7 +124,7 @@ class Conta:
 
         return False
 
-    @log_transacao
+    @log_transacao_arquivo
     def depositar(self, valor):
         # Método para realizar um depósito na conta
         if self._verificar_limite_transacoes():
@@ -246,7 +271,7 @@ def recuperar_conta_cliente(cliente):
     # FIXME: não permite cliente escolher a conta
     return cliente.contas[0]
 
-@log_transacao
+@log_transacao_arquivo
 def depositar(clientes):
     # Função para realizar um depósito
     cpf = input("Informe o CPF do cliente: ")
@@ -265,7 +290,7 @@ def depositar(clientes):
 
     cliente.realizar_transacao(conta, transacao)
 
-@log_transacao
+@log_transacao_arquivo
 def sacar(clientes):
     # Função para realizar um saque
     cpf = input("Informe o CPF do cliente: ")
@@ -284,7 +309,7 @@ def sacar(clientes):
 
     cliente.realizar_transacao(conta, transacao)
 
-@log_transacao
+@log_transacao_arquivo
 def exibir_extrato(clientes):
     # Função para exibir o extrato de uma conta
     cpf = input("Informe o CPF do cliente: ")
@@ -312,7 +337,7 @@ def exibir_extrato(clientes):
     print(f"\nSaldo:\n\tR$ {conta.saldo:.2f}")
     print("==========================================")
 
-@log_transacao
+@log_transacao_arquivo
 def criar_cliente(clientes):
     # Função para criar um novo cliente
     cpf = input("Informe o CPF (somente número): ")
@@ -332,7 +357,7 @@ def criar_cliente(clientes):
 
     print("\n=== Cliente criado com sucesso! ===")
 
-@log_transacao
+@log_transacao_arquivo
 def criar_conta_de_um_cliente_para_o_banco(numero_conta, clientes, contas):
     # Função para criar uma nova conta
     cpf = input("Informe o CPF do cliente: ")

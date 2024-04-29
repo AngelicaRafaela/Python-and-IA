@@ -1,0 +1,14 @@
+[29-04-2024 15:53] Função 'criar_cliente' executada com argumentos ([<PessoaFisica: (1)>],) e {}. Retornou None
+[29-04-2024 15:57] Função 'criar_cliente' executada com argumentos ([<PessoaFisica: (2)>],) e {}. Retornou None
+[29-04-2024 15:57] Função 'criar_conta_de_um_cliente_para_o_banco' executada com argumentos (1, [<PessoaFisica: (2)>], []) e {}. Retornou None
+[29-04-2024 15:57] Função 'criar_conta_de_um_cliente_para_o_banco' executada com argumentos (1, [<PessoaFisica: (2)>], [<ContaCorrente: ('0001', '1', 'b')>]) e {}. Retornou None
+[29-04-2024 15:59] Função 'criar_cliente' executada com argumentos ([<PessoaFisica: ('joao','3')>],) e {}. Retornou None
+[29-04-2024 15:59] Função 'criar_conta_de_um_cliente_para_o_banco' executada com argumentos (1, [<PessoaFisica: ('joao','3')>], [<ContaCorrente: ('0001', '1', 'joao')>]) e {}. Retornou None
+[29-04-2024 16:00] Função 'depositar' executada com argumentos (<ContaCorrente: ('0001', '1', 'joao')>, 3000.0) e {}. Retornou True
+[29-04-2024 16:00] Função 'realizar_transacao' executada com argumentos (<PessoaFisica: ('joao','3')>, <ContaCorrente: ('0001', '1', 'joao')>, <__main__.Deposito object at 0x000002C85F9E1750>) e {}. Retornou None
+[29-04-2024 16:00] Função 'depositar' executada com argumentos ([<PessoaFisica: ('joao','3')>],) e {}. Retornou None
+[29-04-2024 16:00] Função 'sacar' executada com argumentos ([<PessoaFisica: ('joao','3')>],) e {}. Retornou None
+[29-04-2024 16:00] Função 'sacar' executada com argumentos (<ContaCorrente: ('0001', '1', 'joao')>, 500.0) e {}. Retornou True
+[29-04-2024 16:00] Função 'realizar_transacao' executada com argumentos (<PessoaFisica: ('joao','3')>, <ContaCorrente: ('0001', '1', 'joao')>, <__main__.Saque object at 0x000002C85F9E1750>) e {}. Retornou None
+[29-04-2024 16:00] Função 'sacar' executada com argumentos ([<PessoaFisica: ('joao','3')>],) e {}. Retornou None
+[29-04-2024 16:01] Função 'exibir_extrato' executada com argumentos ([<PessoaFisica: ('joao','3')>],) e {}. Retornou None

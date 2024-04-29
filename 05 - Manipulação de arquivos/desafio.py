@@ -1,12 +1,20 @@
 import textwrap
 from abc import ABC, abstractclassmethod, abstractproperty
-from datetime import datetime, timedelta
+from datetime import datetime
+from pathlib import Path
 
-def log_transacao(funcao):
+ROOT_PATH = Path(__file__).parent
+
+def log_transacao(func):
     # Decorador para registrar as transações
     def envelope(*args, **kwargs):
-        resultado = funcao(*args, **kwargs)
-        print(f"{datetime.now().strftime('%d-%m-%Y %H:%M')}: {funcao.__name__.upper()}")
+        resultado = func(*args, **kwargs)
+        data_hora = datetime.now().strftime('%d-%m-%Y %H:%M')        
+        with open(ROOT_PATH / 'log.txt', 'a') as arquivo:
+            arquivo.write(
+                f"[{data_hora}] Função '{func.__name__}' executada com argumentos {args} e {kwargs}. "
+                f"Retornou {resultado}\n"
+            )    
         return resultado
     return envelope
 
@@ -34,7 +42,7 @@ class PessoaFisica(Cliente):
         self.data_nascimento = data_nascimento
         self.cpf = cpf
     def __repr__(self) -> str:
-        return f"<{self.__class__.__na}: ({self.cpf})>"
+        return f"<{self.__class__.__name__}: ('{self.nome}','{self.cpf}')>"
 
 class Conta:
     MAX_TRANSACTIONS_PER_DAY = 2  # Limite de transações diárias

@@ -1,0 +1,16 @@
+Data e Hora,Função,Argumentos,Valor Retornado
+29-04-2024 15:23,criar_cliente,"([],)",{}
+29-04-2024 15:23,criar_conta_de_um_cliente_para_o_banco,"(1, [<PessoaFisica: (1)>], [])",{}
+29-04-2024 15:23,depositar,"([<PessoaFisica: (1)>],)",{}
+29-04-2024 15:39,depositar,"([],)",{}
+29-04-2024 15:40,criar_cliente,"([],)",{}
+29-04-2024 15:40,criar_conta_de_um_cliente_para_o_banco,"(1, [<PessoaFisica: (1)>], [])",{}
+29-04-2024 15:40,depositar,"([<PessoaFisica: (1)>],)",{}
+29-04-2024 15:40,realizar_transacao,"(<PessoaFisica: (1)>, <ContaCorrente: ('0001', '1', 'a')>, <__main__.Deposito object at 0x00000282D8060450>)",{}
+29-04-2024 15:40,depositar,"(<ContaCorrente: ('0001', '1', 'a')>, 2000.0)",{}
+29-04-2024 15:40,sacar,"([<PessoaFisica: (1)>],)",{}
+29-04-2024 15:40,realizar_transacao,"(<PessoaFisica: (1)>, <ContaCorrente: ('0001', '1', 'a')>, <__main__.Saque object at 0x00000282D8060590>)",{}
+29-04-2024 15:40,sacar,"(<ContaCorrente: ('0001', '1', 'a')>, 500.0)",{}
+29-04-2024 15:40,exibir_extrato,"([<PessoaFisica: (1)>],)",{}
+29-04-2024 15:56,criar_cliente,"([],)",{}
+29-04-2024 15:56,criar_conta_de_um_cliente_para_o_banco,"(1, [<PessoaFisica: (1)>], [])",{}
